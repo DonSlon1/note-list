@@ -1,0 +1,91 @@
+:root{
+    --div-backgroun-collor: #006eca;
+}
+#Small_Nav_Div{
+    background-color: var(--div-backgroun-collor);
+    width: fit-content;
+    height: 100%;
+    margin-right: 10px;
+    position: relative;
+}
+#Small_Nav_Div>.Button_div{
+    width: 100%;
+    margin:0 0 10px 0;
+    float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 40px;
+    color: aliceblue;
+}
+#Small_Nav_Div>button{
+    float: right;
+    background-color: var(--div-backgroun-collor);
+}
+#Small_Nav_Div>ul{
+
+    float: right;
+    padding-left: 0;
+}
+li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: aliceblue;
+}
+
+#Nav_Div {
+    background-color: var(--div-backgroun-collor);
+    width: 10%;
+    height: 100%;
+    min-width: fit-content;
+    margin-right: 10px;
+    position: relative;
+}
+#Nav_Div>.Button_div{
+    margin:16px 0 10px 100%;
+    color: aliceblue;
+}
+.Button_li{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 40px;
+}
+#Nav_Div>button{
+    padding-left: 20px;
+}
+button{
+    border-radius: 0;
+    border: 0;
+    background-color: var(--div-backgroun-collor);
+}
+li:hover:not(.Button_li){
+    color: #000000;
+    background: aliceblue;
+    border-radius: 10px;
+}
+ul{
+    list-style: none;
+    padding-left: 10px;
+}
+
+.nav_icons {
+
+    pointer-events: none;
+    margin: 0  10px 0 15px;
+    height: 40px;
+    width: 40px;
+
+}
+a{
+    padding: 10px 0 10px 0;
+    width: 100%;
+    text-underline: none;
+    color: aliceblue;
+}
+a:hover{
+    text-decoration: none;
+    color: #000000;
+    background: aliceblue;
+    border-radius: 10px;
+}
