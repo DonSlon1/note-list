@@ -1,9 +1,15 @@
-import React ,{useState} from "react";
+import React, {useContext, useState} from "react";
 import './nav.css';
 import {AiOutlineProfile,AiOutlineHome,AiOutlineBars,AiOutlineCalendar,AiOutlineUser} from 'react-icons/ai'
+import {Link, Navigate} from "react-router-dom"
+import AuthContext from "../../context/AuthProvider";
 
 const Nav = () => {
 
+
+    if ((useContext(AuthContext)['auth']['user'])===undefined){
+        return <Navigate replace to="/login" />
+    }
     const [showNav, setShowNav] = useState(false)
     const [showNav1,setShowNav1]= useState(true)
     const todo_element=document.getElementsByClassName('todo-element')
@@ -39,29 +45,29 @@ const Nav = () => {
                             <span><button onClick={NavShow} className={'Button_div'} id={'Button_Close'}><AiOutlineBars color={'aliceblue'} className={ 'nav_icons'}/></button></span>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/"}>
+                            <Link className={'nava'} to="/App">
                                 <span><AiOutlineHome className={ 'nav_icons'}/></span>
                                 Home
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/todo-list"}>
+                            <Link  className={'nava'} to={"/todo-list"}>
                                 <span><AiOutlineProfile className={ 'nav_icons'}/></span>
                                 Todo List
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                           <a href={"http://localhost:3000/"}>
+                           <Link  className={'nava'} to={"/"}>
                                <span><AiOutlineCalendar className={'nav_icons'}/></span>
                                Calendar
-                           </a>
+                           </Link>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/"}>
+                            <Link className={'nava'} to={"/login"}>
                                 <span><AiOutlineUser className={'nav_icons'}/></span>
                                 Account
-                            </a>
+                            </Link>
                         </li>
                     </ul>
             </div>}
@@ -74,24 +80,24 @@ const Nav = () => {
                             <span><button onClick={NavShow1} className={'Button_div'} id={'Button_Close'}><AiOutlineBars color={'aliceblue'} className={ 'nav_icons'}/></button></span>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/"}>
+                            <Link className={'nava'} to={"/App"}>
                             <span><AiOutlineHome className={ 'nav_icons'}/></span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/todo-list"}>
+                            <Link className={'nava'} to={"/todo-list"}>
                             <span><AiOutlineProfile className={ 'nav_icons'}/></span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                        <a href={"http://localhost:3000/"}>
+                        <Link className={'nava'} to={"/"}>
                             <span><AiOutlineCalendar className={'nav_icons'}/></span>
-                        </a>
+                        </Link>
                         </li>
                         <li>
-                            <a href={"http://localhost:3000/"}>
+                            <Link className={'nava'} to={"/login"}>
                             <span><AiOutlineUser className={'nav_icons'}/></span>
-                            </a>
+                            </Link>
                         </li>
 
                     </ul>

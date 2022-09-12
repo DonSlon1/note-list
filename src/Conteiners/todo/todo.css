@@ -3,6 +3,7 @@
 
 #todo
 {
+    margin-top: 55px;
     margin-left: 73px;
     position: fixed;
     top: 0;
@@ -29,7 +30,8 @@
     overflow-y: scroll;
 }
 h2{
-    margin: 20px;
+
+    margin: 20px 0 20px 20px;
 }
 span:not .text{
     float: right;
@@ -77,7 +79,7 @@ span:not .text{
 
 #Title:focus{
 
-    border-bottom: 1px solid #1890ff;
+    border-bottom: 2px solid #1890ff;
 
     outline: none;}
 
@@ -142,7 +144,7 @@ span:not .text{
     bottom: 2%;
 }
 .Task{
-    margin: 10px;
+    margin: 20px;
     background: #272b34;
 
 }
@@ -151,7 +153,8 @@ span:not .text{
     display: inline-block;
     overflow-wrap:break-word ;
     width: 100%;
-    padding: 0 10px 10px 10px;
+    margin-bottom: 0;
+    padding: 0 10px 0 10px;
 }
 .Time{
 
@@ -162,10 +165,6 @@ span:not .text{
     padding-bottom: 10px;
 
 }
-.DivForTime{
-
-    height: fit-content;
-}
 #DayPicker{
     position: absolute;
 }
@@ -174,4 +173,9 @@ span:not .text{
     border-radius: 20px;
     background-color: var(--div-backgroun-collor);
     position: absolute;
+}
+.iconinh2{
+    margin: 15px 15px 0 0;
+    float: right;
+    color: crimson;
 }

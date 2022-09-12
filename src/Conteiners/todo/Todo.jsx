@@ -1,20 +1,53 @@
-import React, { useState } from "react";
+import React, {useState, useEffect, useContext} from "react";
 
 import "./todo.css";
-import "./Task";
 import { AiOutlineClose, AiOutlineCalendar } from "react-icons/ai";
 import { IoMdAddCircle } from "react-icons/io";
 import { DayPicker } from "react-day-picker";
+import {BsFillTrashFill} from "react-icons/bs"
 import { format } from "date-fns";
 import "./day-picker.css.css";
+import axios from "axios";
+import AuthContext from "../../context/AuthProvider";
 
 
+// [
+//   {Status:"Todo",
+//     TaskName: '0',
+//     Description: '0000000000000'},
+//   {Status:"Todo",
+//     TaskName: '1',
+//     Description: '11111111111111'},
+//   {Status:"Todo",
+//     TaskName: '2',
+//     Description: '222222222222222'}]
 
+//process
 const Todo = () => {
+
   const [AddDiv, setAddDiv] = useState(false);
   const [AddTime, setAddTime] = useState(false);
   const [selected, setSelected] = React.useState(new Date());
   const [AddCalendar, setAddCalendar] = useState(false);
+  const [externalEvents, setExternalEvents] = React.useState([])
+
+  const data_abaut_user=(useContext(AuthContext)['auth']['user'])
+
+  if(data_abaut_user!==undefined) {
+    const username=data_abaut_user.name
+
+    // document.onload=(useEffect(() => {axios.get('http://localhost:8888/api/upload.php',{ params: { name: username } })
+    //         .then(response => console.log(response.data[0].data))},[])
+    // )
+ useEffect(() => {axios.get('http://localhost:8888/api/upload.php',{ params: { name: username } })
+        .then(response => setExternalEvents(JSON.parse(response.data[0].data)))},[])
+    console.log(externalEvents)
+
+
+  // document.onload=(useEffect(() => {axios.get('http://localhost:8888/api/upload.php')
+  //         .then(response => setExternalEvents(JSON.parse(response.data[0].data)))},[])
+  // )
+
 
   const displayday = (
     <p id={"day"} type={"text"}>
@@ -29,6 +62,9 @@ const Todo = () => {
     }
   };
   const OpenTime = () => {
+
+
+
     setAddTime(!AddTime);
   };
   const OpenCalendar = () => {
@@ -42,16 +78,13 @@ const Todo = () => {
     description: ""
   };
 
-  // const [NewObject, setNewObject] = useState();
   const CloseCallendar = () => {
     if (AddCalendar === true) {
       setAddCalendar(false);
 
     }
   };
-  //handle drag started
 
-  const [externalEvents, setExternalEvents] = useState([]);
 
 
   const AddNote = () => {
@@ -62,6 +95,7 @@ const Todo = () => {
     setAddCalendar(false);
     setAddTime(false);
     setAddDiv(false);
+
     if (IfoForDiv.haveTime === true) {
       setExternalEvents(prev => [
         ...prev,
@@ -84,6 +118,8 @@ const Todo = () => {
       ]);
     }
 
+
+
   };
 
   const handleDragSart=(e,name)=>{
@@ -94,34 +130,21 @@ const Todo = () => {
 
     e.preventDefault()
   }
+
+
   let obj={
     InProgres:[],
     Todo:[],
     Complete:[]
 
   }
-  Object.keys(externalEvents).map((item, i) => {
-    console.log(externalEvents)
-  obj[externalEvents[i].Status].push(
 
-  // externalEvents.forEach(task=>{
-  //
-  //     obj[task.Status].push(
-        <div
-            draggable
-            onDragStart={(e) => {handleDragSart(e, i)}}
-            className="Task"
-            key={i}>
+  const DealetDiv=(i)=>{
 
-          <h2>{externalEvents[i].TaskName}</h2>
-          <p className="Description">
-            {externalEvents[i].Description}
-          </p>
-          <div className="DivForTime">
-            <p className="Time">{externalEvents[i].Day}</p>
-          </div>
-        </div>)
-  });
+    setExternalEvents(externalEvents=>externalEvents.filter((task)=>task!==externalEvents[i]))
+  }
+
+
   const HandleOnDrop=(e,status)=>{
     let id=e.dataTransfer.getData("id")
 
@@ -138,11 +161,41 @@ const Todo = () => {
 
     setExternalEvents(list)
 
+
   }
+  // (response.data[0].data))},[])
+  useEffect(()=>{
+    axios.post('http://localhost:8888/api/upload.php',{ data:externalEvents,process:"POST",name: username} )
+  },[externalEvents])
+
+
+console.log(externalEvents)
+  Object.keys(externalEvents).map((item, i) => {
+  obj[externalEvents[i].Status].push(
+        <div
+            draggable
+            onDragOver={(e)=>HandleDragOver(e)}
+            onDragStart={(e) => {handleDragSart(e, i)}}
+            className="Task"
+            key={i}>
+          <h2>{externalEvents[i].TaskName} <BsFillTrashFill className={'iconinh2'} size={20} onClick={()=>DealetDiv(i)}/></h2>
+
+          <p className="Description">
+            {externalEvents[i].Description}
+          </p>
+          <div className="DivForTime">
+            <p className="Time">{externalEvents[i].Day}</p>
+          </div>
+        </div>)
+  });
+
+
+
+
+
   return (
     <>
       <div id={"todo"}>
-        <h1>510</h1>
         <div>
           <div className={"todo-element"}
                onDragOver={(e)=>HandleDragOver(e)}
@@ -157,7 +210,7 @@ const Todo = () => {
           <div  className={"todo-element"}
                 onDragOver={(e)=>HandleDragOver(e)}
                 onDrop={(e)=>HandleOnDrop(e,"InProgres")}>
-            <h2>In progress</h2>
+            <h2>In progress {window.$name}</h2>
             <div id={"InProgres"}
                  className={"task-element"}
 
@@ -221,6 +274,6 @@ const Todo = () => {
       )}
     </>
   );
-};
+}}
 
 export default Todo;

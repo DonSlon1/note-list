@@ -77,13 +77,13 @@ ul{
     width: 40px;
 
 }
-a{
+.nava{
     padding: 10px 0 10px 0;
     width: 100%;
     text-underline: none;
     color: aliceblue;
 }
-a:hover{
+.nava:hover{
     text-decoration: none;
     color: #000000;
     background: aliceblue;
