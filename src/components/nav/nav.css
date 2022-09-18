@@ -1,5 +1,6 @@
 :root{
     --div-backgroun-collor: #006eca;
+    --offset-of-nav:73px;
 }
 #Small_Nav_Div{
     background-color: var(--div-backgroun-collor);
@@ -47,14 +48,14 @@ li{
     margin:16px 0 10px 100%;
     color: aliceblue;
 }
-.Button_li{
+.Button_li:not(#today){
     font-family: 'Shadows Into Light', cursive;
     font-size: 40px;
 }
 #Nav_Div>button{
     padding-left: 20px;
 }
-button{
+button:not(#today){
     border-radius: 0;
     border: 0;
     background-color: var(--div-backgroun-collor);

@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-
+:root{
+    --offset-of-todo:88px;
+}
 #todo
 {
     margin-top: 55px;
-    margin-left: 73px;
+    margin-left: var(--offset-of-nav);
     position: fixed;
     top: 0;
 
@@ -24,7 +26,7 @@
     color: #d1d0d0;
     background: #1D2329FF;
     float: right;
-    margin-left: 88px;
+    margin-left: var(--offset-of-todo);
     width: 500px;
     height: 800px;
     overflow-y: scroll;

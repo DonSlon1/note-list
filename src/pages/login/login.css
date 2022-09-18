@@ -26,7 +26,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border: 5px solid #FFFF00;
-    padding: 10px;
+
 }
 .icons{
     padding: 5px 0;
@@ -73,4 +73,33 @@
 .accaunt:hover{
     color: #d1d0d0;
 
+}
+#long_login{
+    margin-right: 5px;
+
+}
+#long_login_sapn{
+    display:inline-block;
+    margin: 15px 0 0 20px ;
+    color:#d1d0d0;
+}
+.wrong{
+    color: #d1d0d0;
+    width: 100%;
+    height: 45px;
+    background: #971918E5;
+    display: flex;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+}
+#divtext{
+    padding:0 10px 10px 10px;
+}
+#showpassword{
+    display: inline-block;
+    margin: 15px 0 0 20px ;
+    color:#d1d0d0;
+    float: right;
 }

@@ -1,0 +1,64 @@
+:root{
+    --calendar-height:18.45vh
+}
+.TopBar{
+    position: fixed;
+    top: 0;
+    height: 5%;
+    width: 100%;
+    margin-left: var(--offset-of-nav);
+    background: #272b34;
+}
+#today{
+    color: #d1d0d0;
+    margin-left: 10px;
+    font-size: 25px;
+    border-radius: 4px;
+    background-color: transparent;
+    border:solid #5c5c5c 2px;
+
+}
+#today:active{
+    outline: none;
+    background-color: #424247;
+    border:solid #5c5c5c 2px;
+}
+#today:focus{
+    outline: none;
+
+}
+.changedatearow{
+    margin: 0 10px  3px 10px;
+    color: #d1d0d0;
+    height: 100%;
+    width: 38px;
+}
+#date{
+    color: #d1d0d0;
+    font-size: 25px;
+}
+#calendar_div{
+    position: absolute;
+    bottom: 0;
+    left: var(--offset-of-nav);
+    right: 0;
+    color: #d1d0d0;
+    top: 5%;
+
+}
+.DivWithDay {
+    margin: 0 0 0 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.DivWithDay .product {
+    height: var(--calendar-height);
+    width: 14.28%;
+    border: 1px solid black;
+}
+.NameOfDays{
+    height: fit-content;
+    width: 14.28%;
+    border: 1px solid black;
+}

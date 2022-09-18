@@ -1,55 +1,131 @@
-import React, {useState} from "react";
-import {useContext } from 'react';
-import {AiOutlineUser,AiOutlineLock} from 'react-icons/ai'
-import './login.css'
-import {Link,useNavigate} from "react-router-dom"
+import React, { useState } from "react";
+import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
+import "./login.css";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthContext from "../../context/AuthProvider";
 
-const Login =()=>{
-    const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
+const Login = () => {
+  const navigate = useNavigate();
+  const [PermLogin, SetPermLogin] = useState(false);
+  const [notexistinusername, Setnotexistinusername] = useState(false);
+  const [badpassword, Setbadpassword] = useState(false);
 
-
-    const user={
-        name:"",
-        password:"",
+  const user = {
+    name: "",
+    password: ""
+  };
+  const long_login = () => {
+    SetPermLogin(!PermLogin);
+  };
+  if (localStorage.user !== undefined || sessionStorage.user !== undefined) {
+    React.useEffect(() => {
+      navigate("/account");
+    });
+  }
+  const [SShow_Password, SetSShow_Password] = useState(true);
+  const Show_Password = () => {
+    SetSShow_Password(!SShow_Password);
+    if (SShow_Password === true) {
+      document.getElementById("password").type = "text";
     }
-    const login=()=>{
-        user.name=document.getElementById('name').value;
-        user.password=document.getElementById('password').value;
-
-
-
-        axios.post('http://localhost:8888/api/index.php', {user:user,process:"LOGIN"}).then(response=> {
-            console.log(response)
-            if (response.data==='loginsucesfule'){
-                setAuth({user})
-                navigate('/todo-list')
-            }
-
-        })
-
-
-
-
-
+    if (SShow_Password === false) {
+      document.getElementById("password").type = "password";
     }
- return(
-     <>
-     <div className={'div'}>
+  };
+  const login = () => {
+    user.name = document.getElementById("name").value;
+    user.password = document.getElementById("password").value;
 
-         <div  className={'center_text'}><span><AiOutlineUser className={'icons'} size={40}/></span> <input className={"Title"} id={'name'} type={"text"} placeholder={"Email"} /></div>
+    axios
+      .post("http://localhost:8888/api/index.php", {
+        user: user,
+        process: "LOGIN"
+      })
+      .then(response => {
+        console.log(response);
+        if (response.data === "loginsucesfule") {
+          console.log(user);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          if (PermLogin === true) {
+            console.log(user.name);
+            localStorage.setItem("user", JSON.stringify(user));
+          }
+          navigate("/todo-list");
+        }
+        if (response.data === "notexistinusername") {
+          Setnotexistinusername(true);
+          Setbadpassword(false);
+        }
+        if (response.data === "badpassword") {
+          Setbadpassword(true);
+          Setnotexistinusername(false);
+          console.log(badpassword);
+        }
+      });
+  };
 
-        <div className={'center_text'}><span><AiOutlineLock className={'icons'} size={40}/></span> <input className={"Title"}  id={'password'} type={"password"} placeholder={"Password"} /></div>
-        <div className={'LoginButton'} onClick={login}><button className={'LoginButtonb'}>Login</button></div>
-         <Link to="/todo-list">Go to Home</Link>
-         <span className={'dont'}><Link className={'accaunt'} to={'/registration'}>Create account</Link></span>
+  return (
+    <>
+      <div className={"div"}>
+        {badpassword && (
+          <div className={"wrong"}>
+            <span>
+              <AiOutlineLock className={"icons"} size={40} />
+            </span>
+            <span>Your password is Incorect</span>
+          </div>
+        )}
+        {notexistinusername && (
+          <div className={"wrong"}>
+            <span>
+              <AiOutlineLock className={"icons"} size={40} />
+            </span>
+            <span>Your username is Incorect</span>
+          </div>
+        )}
+        <div id={"divtext"}>
+          <div className={"center_text"}>
+            <span>
+              <AiOutlineUser className={"icons"} size={40} />
+            </span>{" "}
+            <input
+              className={"Title"}
+              id={"name"}
+              type={"text"}
+              placeholder={"Email"}
+            />
+          </div>
 
-
-     </div>
-
-     </>
- )
-}
-export default Login
+          <div className={"center_text"}>
+            <span>
+              <AiOutlineLock className={"icons"} size={40} />
+            </span>{" "}
+            <input
+              className={"Title"}
+              id={"password"}
+              type={"password"}
+              placeholder={"Password"}
+            />
+          </div>
+          <span id={"long_login_sapn"}>
+            <input type={"checkbox"} onClick={long_login} id={"long_login"} />
+            Remember me
+          </span>
+          <span id={"showpassword"}>
+            <input type={"checkbox"} onClick={Show_Password} id={"password"} />
+            Show password
+          </span>
+          <div className={"LoginButton"} onClick={login}>
+            <button className={"LoginButtonb"}>Login</button>
+          </div>
+          <span className={"dont"}>
+            <Link className={"accaunt"} to={"/registration"}>
+              f Create account
+            </Link>
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};
+export default Login;
