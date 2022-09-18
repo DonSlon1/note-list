@@ -55,7 +55,7 @@ li{
 #Nav_Div>button{
     padding-left: 20px;
 }
-button:not(#today){
+button:not(#today):not(#ok){
     border-radius: 0;
     border: 0;
     background-color: var(--div-backgroun-collor);

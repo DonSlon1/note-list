@@ -67,7 +67,30 @@ const Calendar = () => {
   sessionStorage.setItem("month", month);
   sessionStorage.setItem("year", year);
   sessionStorage.setItem("day", day);
+  const index1 =(dday,z)=>{
 
+    if (dday <= 0) {
+      dday = parseInt(new Date(year, MonthINT - 1, 0).getDate() - 1) - parseInt(sessionStorage.getItem("day")) + z
+      if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) - 2] === undefined) {
+        return(ShortMonthName[11] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) - parseInt(1)));
+      } else {
+        return(ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year"))}
+    }else if (dday > sessionStorage.getItem("DaysInMonth")) {
+      dday = dday - sessionStorage.getItem("DaysInMonth");
+      if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] === undefined) {
+        return( ShortMonthName[0] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) + parseInt(1)));
+      } else {
+        return (MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year"));
+      }
+    }else {
+      return (sessionStorage.getItem("ShortMont") +
+          " " +
+          dday +
+          ", " +
+          sessionStorage.getItem("year"))
+    }
+
+  }
   const ShowCallendarRow=(dday,index)=>{
     if (ExternalEvents.filter(e => e.Day === index).length > 0) {
       let u=[]
@@ -136,51 +159,27 @@ const Calendar = () => {
       if (i === 0) {
         for (let z = 1; z <= 7; z++) {
           dday = +z - parseInt(sessionStorage.getItem("day"));
-
-          let index =
-            sessionStorage.getItem("ShortMont") +
-            " " +
-            dday +
-            ", " +
-            sessionStorage.getItem("year");
+          let index=index1(dday,z)
           if (dday <= 0) {
-            dday = parseInt(new Date(year, MonthINT - 1, 0).getDate() - 1) - parseInt(sessionStorage.getItem("day")) + z;
-            if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) - 2] === undefined) {
-              index = ShortMonthName[11] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) - parseInt(1));
-            } else {
-            index = ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year")}
-          }
+            dday = parseInt(new Date(year, MonthINT - 1, 0).getDate() - 1) - parseInt(sessionStorage.getItem("day")) + z}
+
           row=row+ShowCallendarRow(dday,index)
 
         }
       } else if (i === x) {
         for (let z = 1; z <= 7; z++) {
           dday = i * 7 + z - parseInt(sessionStorage.getItem("day"));
-          let index =
-            sessionStorage.getItem("ShortMont") +
-            " " +
-            dday +
-            ", " +
-            sessionStorage.getItem("year");
+          let index=index1(dday,z)
           if (dday > sessionStorage.getItem("DaysInMonth")) {
-            dday = dday - sessionStorage.getItem("DaysInMonth");
-            if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] === undefined) {
-              index = ShortMonthName[0] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) + parseInt(1));
-            } else {
-              index = MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year");
-            }
-          }
+            dday = dday - sessionStorage.getItem("DaysInMonth")}
+
+          console.log(index)
           row=row+ShowCallendarRow(dday,index)
         }
       } else {
         for (let z = 1; z <= 7; z++) {
           dday = i * 7 + z - parseInt(sessionStorage.getItem("day"));
-          let index =
-            sessionStorage.getItem("ShortMont") +
-            " " +
-            dday +
-            ", " +
-            sessionStorage.getItem("year");
+          let index=index1(dday,z)
           row=row+ShowCallendarRow(dday,index)
         }
       }
@@ -221,18 +220,10 @@ const Calendar = () => {
         for (let z = 1; z <= 7; z++) {
           dday = +z - parseInt(sessionStorage.getItem("day"));
 
-          let index =
-              sessionStorage.getItem("ShortMont") +
-              " " +
-              dday +
-              ", " +
-              sessionStorage.getItem("year");
+          let index=index1(dday,z)
           if (dday <= 0) {
             dday = parseInt(new Date(year, MonthINT - 1, 0).getDate() - 1) - parseInt(sessionStorage.getItem("day")) + z;
-            if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) - 2] === undefined) {
-              index = ShortMonthName[11] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) - parseInt(1));
-            } else {
-              index = ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year")}
+
           }
 
           row.push(OnloadCallendarRow(dday,index))
@@ -241,31 +232,16 @@ const Calendar = () => {
       } else if (i === x) {
         for (let z = 1; z <= 7; z++) {
           dday = i * 7 + z - parseInt(sessionStorage.getItem("day"));
-          let index =
-              sessionStorage.getItem("ShortMont") +
-              " " +
-              dday +
-              ", " +
-              sessionStorage.getItem("year");
+          let index=index1(dday,z)
           if (dday > sessionStorage.getItem("DaysInMonth")) {
             dday = dday - sessionStorage.getItem("DaysInMonth");
-            if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] === undefined) {
-              index = ShortMonthName[0] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) + parseInt(1));
-            } else {
-              index = MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year");
-            }
           }
           row.push(OnloadCallendarRow(dday,index))
         }
       } else {
         for (let z = 1; z <= 7; z++) {
           dday = i * 7 + z - parseInt(sessionStorage.getItem("day"));
-          let index =
-              sessionStorage.getItem("ShortMont") +
-              " " +
-              dday +
-              ", " +
-              sessionStorage.getItem("year");
+          let index=index1(dday,z)
           row.push(OnloadCallendarRow(dday,index))
         }
       }
