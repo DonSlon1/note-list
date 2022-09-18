@@ -68,37 +68,69 @@ const Calendar = () => {
   sessionStorage.setItem("year", year);
   sessionStorage.setItem("day", day);
 
-  const ShowCallendar = obj => {
+  const ShowCallendarRow=(dday,index)=>{
+    if (ExternalEvents.filter(e => e.Day === index).length > 0) {
+      let u=[]
+      Object.keys(ExternalEvents).map((item, i) => {
+        if (ExternalEvents[i].Day===index) {
+          u = u + '<div>' + ExternalEvents[i].TaskName + '</div>'
+        }
+      });
+      return('<div class="product" id="' + index + '"> ' + dday +'<div>'+u+'</div>'+ " </div>");
+
+    }else {
+      return('<div class="product" id="' + index + '"> ' + dday + " </div>");
+    }
+  }
+  const HowManyRow=()=>{
     let x = 4;
-    let dday = 0;
-    if (
-      parseInt(sessionStorage.getItem("day")) +
+    if(
+        parseInt(sessionStorage.getItem("day")) +
         parseInt(sessionStorage.getItem("DaysInMonth")) >
-      35
+        35
     ) {
       document.documentElement.style.setProperty(
-        "--calendar-height",
-        "15.37vh"
+          "--calendar-height",
+          "15.37vh"
       );
       x = 5;
     } else if (
-      parseInt(sessionStorage.getItem("day")) +
+        parseInt(sessionStorage.getItem("day")) +
         parseInt(sessionStorage.getItem("DaysInMonth")) <=
-      28
+        28
     ) {
       document.documentElement.style.setProperty("--calendar-height", "23vh");
       x = 3;
     } else if (
-      parseInt(sessionStorage.getItem("day")) +
+        parseInt(sessionStorage.getItem("day")) +
         parseInt(sessionStorage.getItem("DaysInMonth")) <=
-      35
+        35
     ) {
       x = 4;
       document.documentElement.style.setProperty(
-        "--calendar-height",
-        "18.45vh"
+          "--calendar-height",
+          "18.45vh"
       );
     }
+    return x
+  }
+  const OnloadCallendarRow=(dday,index)=>{
+    if (ExternalEvents.filter(e => e.Day === index).length > 0) {
+      let u=[]
+      Object.keys(ExternalEvents).map((item, i) => {
+        if (ExternalEvents[i].Day===index) {
+          u.push(<div>{ExternalEvents[i].TaskName}</div>)
+        }
+      });
+      return(<div class="product" id={index}>{dday}<div>{u}</div></div>);
+
+    }else {
+      return(<><div class="product" id={index}>{dday}</div></>);
+    }
+  }
+  const ShowCallendar = obj => {
+    let dday = 0;
+    let x=HowManyRow()
     for (let i = 0; i < x + 1; i++) {
       let row = [];
       if (i === 0) {
@@ -118,19 +150,7 @@ const Calendar = () => {
             } else {
             index = ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year")}
           }
-
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u = u + '<div>' + ExternalEvents[i].TaskName + '</div>'
-              }
-            });
-            row = row + ('<div class="product" id="' + index + '"> ' + dday +'<div>'+u+'</div>'+ " </div>");
-
-          }else {
-            row = row + ('<div class="product" id="' + index + '"> ' + dday + " </div>");
-          }
+          row=row+ShowCallendarRow(dday,index)
 
         }
       } else if (i === x) {
@@ -150,18 +170,7 @@ const Calendar = () => {
               index = MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year");
             }
           }
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u = u + '<div>' + ExternalEvents[i].TaskName + '</div>'
-              }
-            });
-            row = row + ('<div class="product" id="' + index + '"> ' + dday +'<div>'+u+'</div>'+ " </div>");
-
-          }else {
-            row = row + ('<div class="product" id="' + index + '"> ' + dday + " </div>");
-          }
+          row=row+ShowCallendarRow(dday,index)
         }
       } else {
         for (let z = 1; z <= 7; z++) {
@@ -172,18 +181,7 @@ const Calendar = () => {
             dday +
             ", " +
             sessionStorage.getItem("year");
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u = u + '<div>' + ExternalEvents[i].TaskName + '</div>'
-              }
-            });
-            row = row + ('<div class="product" id="' + index + '"> ' + dday +'<div>'+u+'</div>'+ " </div>");
-
-          }else {
-            row = row + ('<div class="product" id="' + index + '"> ' + dday + " </div>");
-          }
+          row=row+ShowCallendarRow(dday,index)
         }
       }
 
@@ -215,37 +213,8 @@ const Calendar = () => {
 
 
   const onloadCallendar = obj => {
-    let x = 4;
+    let x=HowManyRow()
     let dday = 0;
-    if (
-      parseInt(sessionStorage.getItem("day")) +
-        parseInt(sessionStorage.getItem("DaysInMonth")) >
-      35
-    ) {
-      document.documentElement.style.setProperty(
-        "--calendar-height",
-        "15.37vh"
-      );
-      x = 5;
-    } else if (
-      parseInt(sessionStorage.getItem("day")) +
-        parseInt(sessionStorage.getItem("DaysInMonth")) <=
-      28
-    ) {
-      document.documentElement.style.setProperty("--calendar-height", "23vh");
-      x = 3;
-    } else if (
-      parseInt(sessionStorage.getItem("day")) +
-        parseInt(sessionStorage.getItem("DaysInMonth")) <=
-      35
-    ) {
-      x = 4;
-      document.documentElement.style.setProperty(
-        "--calendar-height",
-        "18.45vh"
-      );
-    }
-
     for (let i = 0; i < x + 1; i++) {
       let row = [];
       if (i === 0) {
@@ -266,18 +235,7 @@ const Calendar = () => {
               index = ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year")}
           }
 
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u.push(<div>{ExternalEvents[i].TaskName}</div>)
-              }
-            });
-            row.push(<div class="product" id={index}>{dday}<div>{u}</div></div>);
-
-          }else {
-            row.push(<><div class="product" id={index}>{dday}</div></>);
-          }
+          row.push(OnloadCallendarRow(dday,index))
 
         }
       } else if (i === x) {
@@ -297,18 +255,7 @@ const Calendar = () => {
               index = MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year");
             }
           }
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u.push(<div>{ExternalEvents[i].TaskName}</div>)
-              }
-            });
-            row.push(<div class="product" id={index}>{dday}<div>{u}</div></div>);
-
-          }else {
-            row.push(<><div class="product" id={index}>{dday}</div></>);
-          }
+          row.push(OnloadCallendarRow(dday,index))
         }
       } else {
         for (let z = 1; z <= 7; z++) {
@@ -319,18 +266,7 @@ const Calendar = () => {
               dday +
               ", " +
               sessionStorage.getItem("year");
-          if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-            let u=[]
-            Object.keys(ExternalEvents).map((item, i) => {
-              if (ExternalEvents[i].Day===index) {
-                u.push(<div>{ExternalEvents[i].TaskName}</div>)
-              }
-            });
-            row.push(<div class="product" id={index}>{dday}<div>{u}</div></div>);
-
-          }else {
-            row.push(<><div class="product" id={index}>{dday}</div></>);
-          }
+          row.push(OnloadCallendarRow(dday,index))
         }
       }
 
