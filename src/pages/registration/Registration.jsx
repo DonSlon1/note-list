@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./registration.css";
-import AuthContext from "../../context/AuthProvider";
+
 import axios from "axios";
-import { AiOutlineLock, AiOutlineUser } from "react-icons/ai";
+import {AiFillEye, AiFillEyeInvisible, AiOutlineLock, AiOutlineUser} from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
-  const { setAuth } = useContext(AuthContext);
   const [PermLogin, SetPermLogin] = useState(false);
   const navigate = useNavigate();
   const user = {
@@ -18,6 +17,8 @@ const Registration = () => {
   const [NotPassword, SetNotPassword] = useState(false);
   const [AgainNotPassword, SetAgainNotPassword] = useState(false);
   const [AgainNotPasswordSame, SetAgainNotPasswordSame] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+  const [isActive2, setIsActive2] = useState(false);
   const long_login = () => {
     SetPermLogin(!PermLogin);
   };
@@ -27,12 +28,17 @@ const Registration = () => {
     if (SShow_Password === true) {
       document.getElementById("password").type = "text";
       document.getElementById("passwordagain").type = "text";
+      setIsActive(false)
+      setIsActive2(true)
     }
     if (SShow_Password === false) {
       document.getElementById("password").type = "password";
       document.getElementById("passwordagain").type = "password";
+      setIsActive(true)
+      setIsActive2(false)
     }
   };
+
   const login1 = () => {
     user.name = document.getElementById("name").value;
     user.password = document.getElementById("password").value;
@@ -175,14 +181,19 @@ const Registration = () => {
               type={"password"}
               placeholder={"Password again"}
             />
+            <span>
+              {isActive &&
+                  <AiFillEye className={"icons"} onMouseDown={Show_Password} onMouseUp={Show_Password} size={40}
+                             id={"passwords"}/>}
+              {
+                  isActive2 && <AiFillEyeInvisible className={"icons"} onMouseDown={Show_Password} onMouseUp={Show_Password} size={40}
+                                                   id={"passwords"}/>
+              }
+            </span>
           </div>
-          <span id={"long_login_sapn"}>
-            <input type={"checkbox"} onClick={long_login} id={"long_login"} />
-            Remember me
-          </span>
-          <span id={"showpassword"}>
-            <input type={"checkbox"} onClick={Show_Password} id={"password"} />
-            Show password
+          <span id={"long_login_sapn"}><label id={"long_login"}>
+            <input type={"checkbox"} onClick={long_login} id={"long_login"}/>
+            Remember me</label>
           </span>
           <div className={"LoginButton"} onClick={login1}>
             <button className={"LoginButtonb"}>Login</button>
