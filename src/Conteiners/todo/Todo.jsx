@@ -165,13 +165,12 @@ const Todo = () => {
             key={i}
           >
             <h2>
+              {externalEvents[i].TaskName}{" "}
               <BsFillTrashFill
-                  className={"iconinh2"}
-                  size={20}
-                  onClick={() => DealetDiv(i)}
+                className={"iconinh2"}
+                size={20}
+                onClick={() => DealetDiv(i)}
               />
-              <div className={'TextInTodo'}>{externalEvents[i].TaskName}{" "}</div>
-
             </h2>
 
             <p className="Description">{externalEvents[i].Description}</p>
@@ -180,16 +179,6 @@ const Todo = () => {
             </div>
           </div>
         );
-
-      });
-      document.addEventListener('mouseup', function(e) {
-            if (document.getElementById('close')!==null) {
-              let container = document.getElementById('close');
-              if (!container.contains(e.target)) {
-                setAddDiv(false)
-
-              }
-            }
       });
       console.log(obj);
       return (
@@ -232,7 +221,7 @@ const Todo = () => {
           </div>
           <IoMdAddCircle className={"add-button"} onClick={RenderDiv} />
           {AddDiv && (
-            <div className={"AddDiv_box"} id={'close'}>
+            <div className={"AddDiv_box"}>
               <AiOutlineClose className={"Close-tag"} onClick={RenderDiv} />
               <input id={"Title"} type={"text"} placeholder={"Name of task"} />
               <span className={"text"}>

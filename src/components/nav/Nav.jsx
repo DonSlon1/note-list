@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./nav.css";
 import {
   AiOutlineProfile,
@@ -12,12 +12,13 @@ import { Link, useNavigate } from "react-router-dom";
 const Nav = () => {
   const [showNav, setShowNav] = useState(false);
   const [showNav1, setShowNav1] = useState(true);
+  const todo_element = document.getElementsByClassName("todo-element");
   const navigate = useNavigate();
 
-  if (sessionStorage.user === undefined) {
+  if (localStorage.user === undefined || sessionStorage.user === undefined) {
     if (localStorage.user === undefined) {
       React.useEffect(() => {
-        navigate("/login")
+        navigate("/login");
       });
     }
   }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineUser, AiOutlineLock ,AiFillEye,AiFillEyeInvisible} from "react-icons/ai";
+import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,8 +9,6 @@ const Login = () => {
   const [PermLogin, SetPermLogin] = useState(false);
   const [notexistinusername, Setnotexistinusername] = useState(false);
   const [badpassword, Setbadpassword] = useState(false);
-  const [isActive, setIsActive] = useState(true);
-  const [isActive2, setIsActive2] = useState(false);
 
   const user = {
     name: "",
@@ -29,13 +27,9 @@ const Login = () => {
     SetSShow_Password(!SShow_Password);
     if (SShow_Password === true) {
       document.getElementById("password").type = "text";
-      setIsActive(false)
-      setIsActive2(true)
     }
     if (SShow_Password === false) {
       document.getElementById("password").type = "password";
-      setIsActive(true)
-      setIsActive2(false)
     }
   };
   const login = () => {
@@ -112,32 +106,21 @@ const Login = () => {
               type={"password"}
               placeholder={"Password"}
             />
-            <span>
-              {isActive &&
-                <AiFillEye className={"icons"} onMouseDown={Show_Password} onMouseUp={Show_Password} size={40}
-                           id={"passwords"}/>}
-              {
-                isActive2 && <AiFillEyeInvisible className={"icons"} onMouseDown={Show_Password} onMouseUp={Show_Password} size={40}
-                             id={"passwords"}/>
-              }
-            </span>
           </div>
           <span id={"long_login_sapn"}>
-            <label id={"long_login"}>
             <input type={"checkbox"} onClick={long_login} id={"long_login"} />
             Remember me
-            </label>
           </span>
           <span id={"showpassword"}>
-
-
+            <input type={"checkbox"} onClick={Show_Password} id={"password"} />
+            Show password
           </span>
           <div className={"LoginButton"} onClick={login}>
             <button className={"LoginButtonb"}>Login</button>
           </div>
           <span className={"dont"}>
             <Link className={"accaunt"} to={"/registration"}>
-              Create account
+              f Create account
             </Link>
           </span>
         </div>

@@ -97,10 +97,10 @@ const Calendar = () => {
       let u=[]
       Object.keys(ExternalEvents).map((item, i) => {
         if (ExternalEvents[i].Day===index) {
-          u = u + '<div class=TodoInCalendar>' + ExternalEvents[i].TaskName + '</div>'
+          u = u + '<div>' + ExternalEvents[i].TaskName + '</div>'
         }
       });
-      return('<div class="product" id="' + index + '"> ' + dday +'<div class="scroll">'+u+'</div>'+ " </div>");
+      return('<div class="product" id="' + index + '"> ' + dday +'<div>'+u+'</div>'+ " </div>");
 
     }else {
       return('<div class="product" id="' + index + '"> ' + dday + " </div>");
@@ -143,10 +143,10 @@ const Calendar = () => {
       let u=[]
       Object.keys(ExternalEvents).map((item, i) => {
         if (ExternalEvents[i].Day===index) {
-          u.push(<div  className={'TodoInCalendar'}>{ExternalEvents[i].TaskName}</div>)
+          u.push(<div>{ExternalEvents[i].TaskName}</div>)
         }
       });
-      return(<div class="product" id={index}><div>{dday}</div><div className={'scroll'}>{u}</div></div>);
+      return(<div class="product" id={index}>{dday}<div>{u}</div></div>);
 
     }else {
       return(<><div class="product" id={index}>{dday}</div></>);
@@ -295,8 +295,6 @@ const Calendar = () => {
   const x = ShowCallendar(obj);
 
   sessionStorage.setItem("obj", x);
-
-
   return (
     <>
       <div className={"TopBar"}>
@@ -315,13 +313,13 @@ const Calendar = () => {
 
       <div id={"calendar_div"}>
         <div className={"DivWithDay"}>
-          <div className={"NameOfDays"}>Mon</div>
-          <div className={"NameOfDays"}>Tue</div>
-          <div className={"NameOfDays"}>Wed</div>
-          <div className={"NameOfDays"}>Thu</div>
-          <div className={"NameOfDays"}>Fri</div>
-          <div className={"NameOfDays"}>Sat</div>
-          <div className={"NameOfDays"}>Sun</div>
+          <div className={"NameOfDays"}>Monday</div>
+          <div className={"NameOfDays"}>Tuesday</div>
+          <div className={"NameOfDays"}>Wednesday</div>
+          <div className={"NameOfDays"}>Thursday</div>
+          <div className={"NameOfDays"}>Friday</div>
+          <div className={"NameOfDays"}>Saturday</div>
+          <div className={"NameOfDays"}>Sunday</div>
         </div>
         <div id={"object"}>{onloadCallendar(obj)}</div>
       </div>
