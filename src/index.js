@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./App";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   TodoList,
   Layout,
@@ -12,13 +12,12 @@ import {
   Calendar
 } from "./pages";
 import App from "./App";
-import { AuthProvider } from "./context/AuthProvider";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
-    <AuthProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
 
@@ -30,7 +29,6 @@ root.render(
           <Route path="app" element={<App />}></Route>
         </Route>
       </Routes>
-    </AuthProvider>
   </BrowserRouter>
 );
 

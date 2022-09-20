@@ -13,7 +13,7 @@
 }
 .add-button{
     color: var(--div-backgroun-collor);
-
+    cursor: pointer;
     position: fixed;
     bottom: 10px;
     right: 10px;
@@ -29,7 +29,7 @@
     margin-left: var(--offset-of-todo);
     width: 500px;
     height: 800px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 h2{
 
@@ -55,6 +55,7 @@ span:not .text{
 }
 
 .Close-tag{
+    cursor: pointer;
     width: 25px;
     height: 25px;
     margin: 10px  10px 0  100%;
@@ -105,6 +106,7 @@ span:not .text{
     width: 70px;
 }
 #calendar{
+    cursor: pointer;
     vertical-align: middle;
 
 }
@@ -129,7 +131,7 @@ span:not .text{
     height: 400px;
     width: 500px;
     resize: none;
-    overflow-y:scroll ;
+    overflow-y:auto ;
 
 }
 #description:focus{
@@ -146,6 +148,8 @@ span:not .text{
     bottom: 2%;
 }
 .Task{
+    cursor: grab;
+    overflow-wrap: break-word;
     margin: 20px;
     background: #272b34;
 
@@ -177,7 +181,14 @@ span:not .text{
     position: absolute;
 }
 .iconinh2{
+    cursor: pointer;
     margin: 15px 15px 0 0;
     float: right;
     color: crimson;
+}
+.TextInTodo{
+    margin-right: 45px;
+}
+#haveTime{
+    cursor: pointer;
 }

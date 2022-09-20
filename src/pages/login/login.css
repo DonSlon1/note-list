@@ -103,3 +103,9 @@
     color:#d1d0d0;
     float: right;
 }
+#long_login{
+    cursor: pointer;
+}
+#passwords{
+    cursor: pointer;
+}
