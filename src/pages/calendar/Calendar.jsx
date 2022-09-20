@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./calendar.css";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const Calendar = () => {
@@ -197,18 +198,25 @@ const Calendar = () => {
     console.log(help);
   }
 
+
   if (help !== undefined) {
     const username = help.name;
+    const navigate = useNavigate();
     useEffect(() => {
       axios
           .get("http://localhost:8888/api/upload.php", {
             params: { name: username }
           })
-          .then(response =>
+          .then(response => {
+            if (response.data[0]===undefined){
+              localStorage.clear();
+              sessionStorage.clear();
+              navigate("/login");
+            }else {
               setExternalEvents(JSON.parse(response.data[0].data))
-          );
+            }
+          });
     }, [])}
-  console.log(ExternalEvents)
 
 
   const onloadCallendar = obj => {

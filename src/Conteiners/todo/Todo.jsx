@@ -7,9 +7,11 @@ import { DayPicker } from "react-day-picker";
 import { BsFillTrashFill } from "react-icons/bs";
 import { format } from "date-fns";
 import "./day-picker.css.css";
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
 const Todo = () => {
+
   const [AddDiv, setAddDiv] = useState(false);
   const [AddTime, setAddTime] = useState(false);
   const [selected, setSelected] = React.useState(new Date());
@@ -29,17 +31,23 @@ const Todo = () => {
 
     if (help !== undefined) {
       const username = help.name;
-
+      const navigate = useNavigate();
       useEffect(() => {
         axios
-          .get("http://localhost:8888/api/upload.php", {
-            params: { name: username }
-          })
-          .then(response =>
-            setExternalEvents(JSON.parse(response.data[0].data))
-          );
+            .get("http://localhost:8888/api/upload.php", {
+              params: { name: username }
+            })
+            .then(response => {
+              if (response.data[0]===undefined){
+                localStorage.clear();
+                sessionStorage.clear();
+                navigate("/login");
+              }else {
+                setExternalEvents(JSON.parse(response.data[0].data))
+              }
+            });
       }, []);
-      console.log(externalEvents);
+
 
       const displayday = (
         <p id={"day"} type={"text"}>
@@ -137,7 +145,6 @@ const Todo = () => {
 
         setExternalEvents(list);
       };
-      // (response.data[0].data))},[])
       useEffect(() => {
         axios.post("http://localhost:8888/api/upload.php", {
           data: externalEvents,
