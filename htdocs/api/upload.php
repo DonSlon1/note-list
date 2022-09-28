@@ -43,7 +43,6 @@ if ($method==="GET"){
 
     $i=file_get_contents('php://input');
     $json=json_decode($i,true);
-    //print_r($_GET['name']);
     $name=$_GET['name'];
 
 
