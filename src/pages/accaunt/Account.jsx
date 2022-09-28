@@ -6,11 +6,10 @@ import axios from "axios";
 const Account = () => {
   const navigate = useNavigate();
   const [AShare,SetAShare] = useState(true)
-    const [Check,SetCheck] = useState(false)
     const [SharedUsers,SetSharedUsers] = useState([])
     const [NotExisistingUsername,SetNotExisistingUsername] = useState(false)
     const [AleradyShare,SetAleradyShare] = useState(false)
-    const [DisableSharing,SetDisableSharing] =useState(false)
+    const [Success,SetSuccess] = useState(false)
 
     let help = undefined;
 
@@ -27,9 +26,8 @@ const Account = () => {
                 SetSharedUsers(JSON.parse(response.data[0].ShareAccaunt))
             })
         }, []);
-
-
     }
+
   const logout = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -49,50 +47,65 @@ const Account = () => {
           }
       }
   })
+    document.addEventListener('mouseup', function (e) {
+        if (document.getElementById('close1') !== null) {
+            let container = document.getElementById('close1');
+            if (!container.contains(e.target)) {
+                SetNotExisistingUsername(false)
+            }
+        }
+    })
+    document.addEventListener('mouseup', function (e) {
+        if (document.getElementById('close2') !== null) {
+            let container = document.getElementById('close2');
+            if (!container.contains(e.target)) {
+                SetAleradyShare(false)
+            }
+        }
+    })
+    document.addEventListener('mouseup', function (e) {
+        if (document.getElementById('close3') !== null) {
+            let container = document.getElementById('close3');
+            if (!container.contains(e.target)) {
+                SetSuccess(false)
+            }
+        }
+    })
 
-  const ShareInDatabase = () => {
-      SetCheck(!Check)
-      axios.post("http://localhost:8888/api/share.php", {
-          data: !Check,
-          process: "POST",
-          name: help.name
-      });
-    }
+
     const SharedAccaunt=()=>{
+        SetAleradyShare(false)
+        SetNotExisistingUsername(false)
         const UserShare = document.getElementById("UserShare").value;
         axios.get("http://localhost:8888/api/Ifexist.php", {
             params: {name: UserShare}
         }).then(response1 =>{
             if (response1.data===1) {
-                axios.get("http://localhost:8888/api/share.php", {
-                    params: {Share: UserShare}
-                }).then(response => {
-                    if(response.data[0].Share===true) {
-                        for (let i = 0; i < SharedUsers.length; i++) {
-                            if (SharedUsers[i].Name === UserShare) {
-                                SetAleradyShare(true)
-                                return
-                            }
-                        }
-                        SetSharedUsers(prev => [
-                            ...prev,
-                            {
-                                Name: UserShare,
-                            }
-                        ])
+                for (let i = 0; i < SharedUsers.length; i++) {
+                    if (SharedUsers[i].Name === UserShare) {
+                        SetAleradyShare(true)
+                        return
+                    }
+                }
+                axios.get("http://localhost:8888/api/upload.php", {
+                    params: {name: UserShare}
+                }).then(response =>{
 
+                SetSharedUsers(prev => [
+                    ...prev,
+                    {
+                        Name: UserShare,
+                        Data :JSON.parse(response.data[0].data),
                     }
-                    else {
-                        SetDisableSharing(true)
-                    }
-                })
+                ])})
+                SetSuccess(true)
+
             }else {
                 SetNotExisistingUsername(true)
             }
         })
 
     }
-
 
     useEffect(() => {
         axios.post("http://localhost:8888/api/AcShare.php", {
@@ -103,21 +116,17 @@ const Account = () => {
     }, [SharedUsers]);
   return (
     <>
-        {DisableSharing &&(
-            <div className={"Error"}>Uživatelské má vyplé zdílení</div>
-        )}
         {AleradyShare &&(
-            <div className={"Error"} >Uživatelské jméno je již zdíleno</div>
+            <div className={"Error"} id={'close2'}>Uživatelské jméno je již zdíleno</div>
         )}
         {NotExisistingUsername &&(
-            <div className={"Error"}>Uživatelské jméno neexistuje</div>
+            <div className={"Error"} id={'close1'}>Uživatelské jméno neexistuje</div>
+        )}
+        {Success &&(
+            <div className={"Error"} id={'close3'}>Uspěšně přidáno</div>
         )}
         {AShare &&(
         <div className={"AddDiv_box"} id={'close'}>
-            <span>
-                Povololit Zdílení
-                <input type={'checkbox'} value={'on'} onClick={ShareInDatabase}/>
-            </span>
             <span  >
                 <input id={'UserShare'}/>
                 <button onClick={SharedAccaunt}> Přidat</button>
