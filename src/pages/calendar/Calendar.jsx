@@ -310,6 +310,7 @@ const Calendar = () => {
             {sessionStorage.getItem("month")}
             {sessionStorage.getItem("year")}
           </span>
+          Sdíleno
         </div>
       </div>
 

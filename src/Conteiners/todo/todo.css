@@ -192,3 +192,6 @@ span:not .text{
 #haveTime{
     cursor: pointer;
 }
+.Unendurable{
+    cursor: default;
+}

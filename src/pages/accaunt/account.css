@@ -17,10 +17,53 @@
     position: absolute;
     top: 10px;
     width: 250px;
-    height: 40px;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
+    padding: 15px 0;
+    text-align: center;
     background-color: #971918E5;
+}
+.Good{
+    color: #ffffff;
+    position: absolute;
+    top: 10px;
+    width: 250px;
+    padding: 15px 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #139d1c;
+}
+.tools{
+    display: inline-block;
+    margin: 20px 0 10px 10px;
+    width: 100%;
+}
+.users{
+    font-size: 20px;
+    float: top;
+    display:inline-block;
+    width: 250px;
+    height: fit-content;
+    padding: 15px;
+    margin: 10px 100% 10px 10px;
+
+}
+.usersspan{
+
+    display:inline-block;
+    width: 100%;
+}
+.iconinh3{
+    display: inline-block;
+    right: 0;
+    cursor: pointer;
+    vertical-align: center;
+    float: right;
+    color: crimson;
+    margin: auto 0;
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./account.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {BsFillTrashFill} from "react-icons/bs";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Account = () => {
     const [NotExisistingUsername,SetNotExisistingUsername] = useState(false)
     const [AleradyShare,SetAleradyShare] = useState(false)
     const [Success,SetSuccess] = useState(false)
+    const share=[]
 
     let help = undefined;
 
@@ -107,6 +109,11 @@ const Account = () => {
 
     }
 
+    const DealetDiv=i=>{
+        SetSharedUsers(SharedUsers =>
+            SharedUsers.filter(task => task !== SharedUsers[i])
+        );
+    }
     useEffect(() => {
         axios.post("http://localhost:8888/api/AcShare.php", {
             process: "AddShare",
@@ -114,6 +121,22 @@ const Account = () => {
             Share: SharedUsers,
         });
     }, [SharedUsers]);
+
+    Object.keys(SharedUsers).map((item,i) => {
+        console.log(SharedUsers[i].Name)
+        share.push(
+            <span className={'users'} key={i}>
+
+                <span className={'center'}>{SharedUsers[i].Name}
+                    <BsFillTrashFill
+                        className={"iconinh3"}
+                        size={20}
+                        onClick={() => DealetDiv(i)}
+                    /></span>
+            </span>
+            );
+
+    });
   return (
     <>
         {AleradyShare &&(
@@ -123,15 +146,25 @@ const Account = () => {
             <div className={"Error"} id={'close1'}>Uživatelské jméno neexistuje</div>
         )}
         {Success &&(
-            <div className={"Error"} id={'close3'}>Uspěšně přidáno</div>
+            <div className={"Good"} id={'close3'}>Uspěšně přidáno</div>
         )}
         {AShare &&(
-        <div className={"AddDiv_box"} id={'close'}>
-            <span  >
-                <input id={'UserShare'}/>
-                <button onClick={SharedAccaunt}> Přidat</button>
-            </span>
-        </div>)
+        <>
+            <div className={"AddDiv_box"} id={'close'}>
+                <span className={'tools'}>
+                    <input id={'UserShare'}/>
+                    <button onClick={SharedAccaunt}> Přidat</button>
+                </span>
+                <div>
+                    Uživatelé od ktrých získáváte poznámky
+                    <span className={'usersspan'}>
+                        {share}
+                    </span>
+                </div>
+            </div>
+
+        </>
+        )
         }
       <button onClick={logout} id={"logout"}>
         Logout

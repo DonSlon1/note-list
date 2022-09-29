@@ -17,6 +17,7 @@ const Todo = () => {
   const [selected, setSelected] = React.useState(new Date());
   const [AddCalendar, setAddCalendar] = useState(false);
   const [externalEvents, setExternalEvents] = React.useState([]);
+  const [Share,SetShare] =useState([])
 
   console.log(localStorage.user);
   try {
@@ -47,6 +48,14 @@ const Todo = () => {
               }
             });
       }, []);
+        useEffect(() => {
+          axios.get("http://localhost:8888/api/AcShare.php", {
+            params: {name: help.name}
+          }).then(response => {
+            console.log(JSON.parse(response.data[0].ShareAccaunt)[0])
+            SetShare(JSON.parse(response.data[0].ShareAccaunt)[0])
+          })
+        }, []);
 
 
       const displayday = (
@@ -153,35 +162,55 @@ const Todo = () => {
         });
       }, [externalEvents]);
 
-      Object.keys(externalEvents).map((item, i) => {
-        obj[externalEvents[i].Status].push(
+      Object.keys(Share.Data).map((item, i) => {
+        obj[Share.Data[i].Status].push(
           <div
-            draggable
-            onDragOver={e => HandleDragOver(e)}
-            onDragStart={e => {
-              handleDragSart(e, i);
-            }}
-            className="Task"
+            className={"Task "+Share.Name+" Unendurable"}
             key={i}
           >
             <h2>
-              <BsFillTrashFill
-                  className={"iconinh2"}
-                  size={20}
-                  onClick={() => DealetDiv(i)}
-              />
-              <div className={'TextInTodo'}>{externalEvents[i].TaskName}{" "}</div>
-
+              <div className={'TextInTodo'}>{Share.Data[i].TaskName}{" "}</div>
             </h2>
-
-            <p className="Description">{externalEvents[i].Description}</p>
+            <p className="Description">{Share.Data[i].Description}</p>
             <div className="DivForTime">
-              <p className="Time">{externalEvents[i].Day}</p>
+              <p className="Time">{Share.Data[i].Day}</p>
             </div>
           </div>
         );
 
-      });
+      })
+      Object.keys(externalEvents).map((item, i) => {
+            obj[externalEvents[i].Status].push(
+                <div
+                    draggable
+                    onDragOver={e => HandleDragOver(e)}
+                    onDragStart={e => {
+                      handleDragSart(e, i);
+                    }}
+
+                    className={"Task"}
+                    key={i}
+
+                >
+                  <h2>
+                    <BsFillTrashFill
+                        className={"iconinh2"}
+                        size={20}
+                        onClick={() => DealetDiv(i)}
+                    />
+                    <div className={'TextInTodo'}>{externalEvents[i].TaskName}{" "}</div>
+
+                  </h2>
+
+                  <p className="Description">{externalEvents[i].Description}</p>
+                  <div className="DivForTime">
+                    <p className="Time">{externalEvents[i].Day}</p>
+                  </div>
+                </div>
+            );
+
+          }
+      );
       document.addEventListener('mouseup', function(e) {
             if (document.getElementById('close')!==null) {
               let container = document.getElementById('close');
