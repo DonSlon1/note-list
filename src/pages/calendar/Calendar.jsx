@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {AiFillEyeInvisible, AiOutlineArrowLeft, AiOutlineArrowRight} from "react-icons/ai";
+import {AiFillEye, AiFillEyeInvisible, AiOutlineArrowLeft, AiOutlineArrowRight} from "react-icons/ai";
 import "./calendar.css";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -56,7 +56,7 @@ const Calendar = () => {
     "Saturday",
     "Sunday"
   ];
-  const [Share_AC,SetShareAC]=useState([])
+  const Share_AC=[]
   const [Up,SetUp]=useState(true)
   const [Down,SetDown]=useState(false)
   const [Share,SetShare]=useState([])
@@ -331,8 +331,21 @@ const Calendar = () => {
 
   sessionStorage.setItem("obj", x);
 
+  const Hide=(event)=>{
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'h').style.display='none'
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'r').style.display='inline'
+    let classs=Array.from(document.getElementsByClassName(event.replaceAll('.', '-').replaceAll('@', '-')))
+    classs.forEach(box=>{
+      box.style.display='none'
+    })
+  }
   const Reveal=(event)=>{
-    console.log(event.target.id)
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'h').style.display='inline'
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'r').style.display='none'
+    let classs=Array.from(document.getElementsByClassName(event.replaceAll('.', '-').replaceAll('@', '-')))
+    classs.forEach(box=>{
+      box.style.display='block'
+    })
   }
 
   Object.keys(Share).map((item, i) => {
@@ -340,8 +353,17 @@ const Calendar = () => {
       if (Share[i].Name !== Share_AC[i].key) {
         Share_AC.push(
             <span key={Share[i].Name}> {Share[i].Name}
-              <AiFillEyeInvisible onClick={(event => Reveal(event))}
-                                  id={((Share[i].Name).replaceAll('.', '-')).replaceAll('@', '-')}/>
+              <AiFillEyeInvisible onClick={(() => Hide(Share[i].Name))}
+                                  className={'show1'}
+                                  size={20}
+                                  id={((Share[i].Name+'h').replaceAll('.', '-')).replaceAll('@', '-')}
+              />
+              <AiFillEye onClick={(() => Reveal(Share[i].Name))}
+                                  className={'show1'}
+                                  id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
+                                  size={20}
+                                  style={{display : 'none'}}
+              />
           <br/>
         </span>
         )
@@ -349,17 +371,20 @@ const Calendar = () => {
     }catch {
       Share_AC.push(
           <span key={Share[i].Name}> {Share[i].Name}
-            <AiFillEyeInvisible onClick={(event => Reveal(event))}
-                                id={((Share[i].Name).replaceAll('.', '-')).replaceAll('@', '-')}/>
+            <AiFillEyeInvisible onClick={(() => Hide(Share[i].Name))}
+                                className={'show1'}
+                                id={((Share[i].Name+'h').replaceAll('.', '-')).replaceAll('@', '-')}
+                                size={20}/>
+            <AiFillEye onClick={(() => Reveal(Share[i].Name))}
+                                className={'show1'}
+                                id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
+                                size={20}
+                                style={{display : 'none'}}
+            />
           <br/>
         </span>)
     }
 
-
-
-
-
-    console.log(Share_AC)
   })
   return (
     <>
@@ -383,7 +408,10 @@ const Calendar = () => {
                       SetUp(true)
                       SetDown(false)
 
-                    }} id={'down'}/>
+                    }}
+                    id={'down'}
+                    className={'ShareArrow'}
+                    />
                     <div id={"1"} className={'Share'} >{Share_AC}</div>
                   </>
                     )}
@@ -391,7 +419,9 @@ const Calendar = () => {
                 <IoIosArrowUp onClick={()=>{
                   SetUp(false)
                   SetDown(true)
-                }}/>)}
+                }}
+                className={'ShareArrow'}
+                />)}
             </span>
           </div>
         </div>

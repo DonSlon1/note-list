@@ -93,6 +93,7 @@
 }
 #Share{
     color: var(--white-text) ;
+    margin-left: 10px;
 }
 .Share{
     padding: 10px;
@@ -104,4 +105,11 @@
     z-index: 1000;
     position: absolute;
     overflow-y: auto;
+}
+.show1{
+    margin-left: 5px;
+    cursor: pointer;
+}
+.ShareArrow{
+    cursor: pointer;
 }
