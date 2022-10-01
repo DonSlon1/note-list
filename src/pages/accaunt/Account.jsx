@@ -123,7 +123,6 @@ const Account = () => {
     }, [SharedUsers]);
 
     Object.keys(SharedUsers).map((item,i) => {
-        console.log(SharedUsers[i].Name)
         share.push(
             <span className={'users'} key={i}>
 
@@ -140,10 +139,10 @@ const Account = () => {
   return (
     <>
         {AleradyShare &&(
-            <div className={"Error"} id={'close2'}>Uživatelské jméno je již zdíleno</div>
+            <div className={"Error"} id={'close2'}>Email  je již zdílen</div>
         )}
         {NotExisistingUsername &&(
-            <div className={"Error"} id={'close1'}>Uživatelské jméno neexistuje</div>
+            <div className={"Error"} id={'close1'}>Email  jméno neexistuje</div>
         )}
         {Success &&(
             <div className={"Good"} id={'close3'}>Uspěšně přidáno</div>

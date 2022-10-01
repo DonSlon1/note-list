@@ -19,6 +19,7 @@ const Registration = () => {
   const [AgainNotPasswordSame, SetAgainNotPasswordSame] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [isActive2, setIsActive2] = useState(false);
+  const [Email,SetEmail]=useState(false)
   const long_login = () => {
     SetPermLogin(!PermLogin);
   };
@@ -40,11 +41,18 @@ const Registration = () => {
   };
 
   const login1 = () => {
+    SetNotWorking(false);
+    SetNotPassword(false);
+    SetAgainNotPasswordSame(false);
+    SetAgainNotPassword(false);
+    SetNotName(false);
+    SetEmail(false);
     user.name = document.getElementById("name").value;
     user.password = document.getElementById("password").value;
     const passwordagain = document.getElementById("passwordagain").value;
-
+    let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if (
+      reg.test(user.name)===true &&
       user.name !== "" &&
       user.password !== "" &&
       passwordagain === user.password
@@ -61,10 +69,6 @@ const Registration = () => {
         .then(response => {
           if (response.data === "taken") {
             SetNotWorking(true);
-            SetNotPassword(false);
-            SetNotName(false);
-            SetAgainNotPasswordSame(false);
-            SetAgainNotPassword(false);
           } else {
             localStorage.setItem("user", JSON.stringify(user));
             navigate("/todo-list");
@@ -74,44 +78,37 @@ const Registration = () => {
             }
           }
         });
-      // axios.get('http://localhost:8888/api/index.php',{ params: { answer: 42 } })
     } else {
       if (user.name === "") {
-        SetNotWorking(false);
-        SetNotPassword(false);
         SetNotName(true);
-        SetAgainNotPasswordSame(false);
-        SetAgainNotPassword(false);
       } else if (user.password === "") {
-        SetNotWorking(false);
-        SetNotName(false);
         SetNotPassword(true);
-        SetAgainNotPasswordSame(false);
-        SetAgainNotPassword(false);
       } else if (passwordagain === "") {
-        SetNotWorking(false);
-        SetNotName(false);
-        SetNotPassword(false);
         SetAgainNotPassword(true);
-        SetAgainNotPasswordSame(false);
       } else if (passwordagain !== user.password) {
-        SetNotWorking(false);
-        SetNotName(false);
-        SetNotPassword(false);
         SetAgainNotPasswordSame(true);
-        SetAgainNotPassword(false);
+      } else if (reg.test(user.name)===false){
+        SetEmail(true)
       }
     }
   };
   return (
     <>
       <div className={"div"}>
+        {Email &&(
+            <div className={"wrong"}>
+            <span>
+              <AiOutlineLock className={"icons"} size={40} />
+            </span>
+              <span>Email is not valid</span>
+            </div>
+        )}
         {NotWorking && (
           <div className={"wrong"}>
             <span>
               <AiOutlineLock className={"icons"} size={40} />
             </span>
-            <span>Username is already taken</span>
+            <span>Email is already taken</span>
           </div>
         )}
         {NotPassword && (
@@ -127,7 +124,7 @@ const Registration = () => {
             <span>
               <AiOutlineLock className={"icons"} size={40} />
             </span>
-            <span>Username is empty</span>
+            <span>Email is empty</span>
           </div>
         )}
         {AgainNotPassword && (
@@ -196,7 +193,7 @@ const Registration = () => {
             Remember me</label>
           </span>
           <div className={"LoginButton"} onClick={login1}>
-            <button className={"LoginButtonb"}>Login</button>
+            <button className={"LoginButtonb"}>Create account</button>
           </div>
           <span className={"dont"}>
             <Link className={"accaunt"} to={"/login"}>

@@ -86,7 +86,7 @@ const Login = () => {
             <span>
               <AiOutlineLock className={"icons"} size={40} />
             </span>
-            <span>Your username is Incorect</span>
+            <span>Your email is Incorect</span>
           </div>
         )}
         <div id={"divtext"}>

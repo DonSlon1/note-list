@@ -48,14 +48,15 @@ const Todo = () => {
               }
             });
       }, []);
-        useEffect(() => {
-          axios.get("http://localhost:8888/api/AcShare.php", {
-            params: {name: help.name}
-          }).then(response => {
-            console.log(JSON.parse(response.data[0].ShareAccaunt)[0])
-            SetShare(JSON.parse(response.data[0].ShareAccaunt)[0])
-          })
-        }, []);
+      useEffect(() => {
+        axios.get("http://localhost:8888/api/AcShare.php", {
+          params: {name: help.name}
+        }).then(response => {
+          try {
+            SetShare(JSON.parse(response.data[0].ShareAccaunt))
+          }catch {}
+        })
+      }, []);
 
 
       const displayday = (
@@ -162,23 +163,7 @@ const Todo = () => {
         });
       }, [externalEvents]);
 
-      Object.keys(Share.Data).map((item, i) => {
-        obj[Share.Data[i].Status].push(
-          <div
-            className={"Task "+Share.Name+" Unendurable"}
-            key={i}
-          >
-            <h2>
-              <div className={'TextInTodo'}>{Share.Data[i].TaskName}{" "}</div>
-            </h2>
-            <p className="Description">{Share.Data[i].Description}</p>
-            <div className="DivForTime">
-              <p className="Time">{Share.Data[i].Day}</p>
-            </div>
-          </div>
-        );
 
-      })
       Object.keys(externalEvents).map((item, i) => {
             obj[externalEvents[i].Status].push(
                 <div
@@ -211,6 +196,27 @@ const Todo = () => {
 
           }
       );
+        for (let x=0;x<Share.length;x++) {
+          Object.keys(Share[x].Data).map((item, i) => {
+
+            obj[Share[x].Data[i].Status].push(
+                <div
+                    className={"Task " + ((Share[x].Name).replaceAll('.', '-')).replaceAll('@', '-') + " Unendurable"}
+                    key={String(i)+Share[x].Name}
+                >
+                  <h2>
+                    <div className={'TextInTodo'}>{Share[x].Data[i].TaskName}{" "}</div>
+                  </h2>
+                  <p className="Description">{Share[x].Data[i].Description}</p>
+                  <div className="DivForTime">
+                    <p className="Time">{Share[x].Data[i].Day}</p>
+                  </div>
+                </div>
+            );
+
+          })
+        }
+
       document.addEventListener('mouseup', function(e) {
             if (document.getElementById('close')!==null) {
               let container = document.getElementById('close');

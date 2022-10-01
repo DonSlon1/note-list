@@ -1,18 +1,19 @@
 :root{
-    --calendar-height:18.45vh
+    --calendar-height:18.45vh;
+    --white-text:#d1d0d0;
 }
 .TopBar{
-    position: fixed;
-    top: 0;
-    height: 5%;
-    width: 100%;
+    position: absolute;
+    top :0;
+    height: 45px;
+    width: calc(100% - var(--offset-of-nav));
     margin-left: var(--offset-of-nav);
     background: #272b34;
 }
 #today{
-    color: #d1d0d0;
+    color: var(--white-text);
     margin-left: 10px;
-    font-size: 25px;
+    font-size: 1.2em;
     border-radius: 4px;
     background-color: transparent;
     border:solid #5c5c5c 2px;
@@ -30,12 +31,12 @@
 .changedatearow{
     cursor: pointer;
     margin: 0 10px  3px 10px;
-    color: #d1d0d0;
+    color: var(--white-text);
     height: 100%;
     width: 38px;
 }
 #date{
-    color: #d1d0d0;
+    color: var(--white-text);
     font-size: 25px;
 }
 #calendar_div{
@@ -43,8 +44,8 @@
     bottom: 0;
     left: var(--offset-of-nav);
     right: 0;
-    color: #d1d0d0;
-    top: 5%;
+    color: var(--white-text);
+    top: 45px;
 
 }
 .DivWithDay {
@@ -52,6 +53,9 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+}
+.product{
+    overflow-y: hidden;
 }
 .DivWithDay .product:not(.TodoInCalendar) {
     height: var(--calendar-height);
@@ -78,4 +82,26 @@
     padding: 5px 10px 5px 10px;
     text-align: left;
 
+}
+.scroll>div{
+    background-color: #14457b;
+    overflow-wrap: break-word;
+    margin: 10px 4px;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    text-align: left;
+}
+#Share{
+    color: var(--white-text) ;
+}
+.Share{
+    padding: 10px;
+    overflow-wrap: break-word;
+    width: 300px;
+    height: 250px;
+    background-color: #0052ff;
+    margin-left: 19%;
+    z-index: 1000;
+    position: absolute;
+    overflow-y: auto;
 }
