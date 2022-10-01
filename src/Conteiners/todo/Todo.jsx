@@ -167,7 +167,6 @@ const Todo = () => {
         });
       }, [externalEvents]);
 
-
       Object.keys(externalEvents).map((item, i) => {
             obj[externalEvents[i].Status].push(
                 <div
