@@ -198,3 +198,19 @@ span:not .text{
 .rdp{
     padding: 5px;
 }
+.ShareArrow1{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#position{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+#position>#Share>.Share{
+    right: 0;
+    left: -290px;
+}

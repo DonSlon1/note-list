@@ -70,6 +70,24 @@ const Login = () => {
       });
   };
 
+  const Hide=(event)=>{
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'h').style.display='none'
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'r').style.display='inline'
+    let classs=Array.from(document.getElementsByClassName(event.replaceAll('.', '-').replaceAll('@', '-')))
+    classs.forEach(box=>{
+      box.style.display='none'
+    })
+  }
+  const Reveal=(event)=>{
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'h').style.display='inline'
+    document.getElementById((event.replaceAll('.', '-').replaceAll('@', '-'))+'r').style.display='none'
+    let classs=Array.from(document.getElementsByClassName(event.replaceAll('.', '-').replaceAll('@', '-')))
+    classs.forEach(box=>{
+      box.style.display='block'
+    })
+  }
+
+
   return (
     <>
       <div className={"div"}>

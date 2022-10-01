@@ -386,6 +386,15 @@ const Calendar = () => {
     }
 
   })
+  document.addEventListener('mouseup', function (e) {
+    if (document.getElementById('Share') !== null) {
+      let container = document.getElementById('Share');
+      if (!container.contains(e.target)) {
+        SetDown(false)
+        SetUp(true)
+      }
+    }
+  })
   return (
     <>
       <div>

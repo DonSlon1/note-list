@@ -100,7 +100,9 @@
     overflow-wrap: break-word;
     width: 300px;
     height: 250px;
-    background-color: #0052ff;
+    background-color: #1d2329;
+    border: 5px solid #16191f;
+    border-radius: 8px;
     margin-left: 19%;
     z-index: 1000;
     position: absolute;
