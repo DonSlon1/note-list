@@ -5,8 +5,9 @@ import axios from "axios";
 import {BsFillTrashFill} from "react-icons/bs";
 
 const Account = () => {
-  const navigate = useNavigate();
-  const [AShare,SetAShare] = useState(true)
+    const site="http://localhost:8888/api/"
+    const navigate = useNavigate();
+    const [AShare,SetAShare] = useState(true)
     const [SharedUsers,SetSharedUsers] = useState([])
     const [NotExisistingUsername,SetNotExisistingUsername] = useState(false)
     const [AleradyShare,SetAleradyShare] = useState(false)
@@ -22,7 +23,7 @@ const Account = () => {
     }
     if (help!==null) {
         useEffect(() => {
-            axios.get("http://localhost:8888/api/AcShare.php", {
+            axios.get(site+"AcShare.php", {
                 params: {name: help.name}
             }).then(response => {
                 SetSharedUsers(JSON.parse(response.data[0].ShareAccaunt))
@@ -30,25 +31,25 @@ const Account = () => {
         }, []);
     }
 
-  const logout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
+    const logout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
 
-    navigate("/login");
-  };
+        navigate("/login");
+    };
     const Share = () => {
         SetAShare(!AShare)
     }
 
 
-  document.addEventListener('mouseup', function (e) {
-      if (document.getElementById('close') !== null) {
-          let container = document.getElementById('close');
-          if (!container.contains(e.target)) {
-              SetAShare(false)
-          }
-      }
-  })
+    document.addEventListener('mouseup', function (e) {
+        if (document.getElementById('close') !== null) {
+            let container = document.getElementById('close');
+            if (!container.contains(e.target)) {
+                SetAShare(false)
+            }
+        }
+    })
     document.addEventListener('mouseup', function (e) {
         if (document.getElementById('close1') !== null) {
             let container = document.getElementById('close1');
@@ -79,7 +80,7 @@ const Account = () => {
         SetAleradyShare(false)
         SetNotExisistingUsername(false)
         const UserShare = document.getElementById("UserShare").value;
-        axios.get("http://localhost:8888/api/Ifexist.php", {
+        axios.get(site+"Ifexist.php", {
             params: {name: UserShare}
         }).then(response1 =>{
             if (response1.data===1) {
@@ -89,17 +90,17 @@ const Account = () => {
                         return
                     }
                 }
-                axios.get("http://localhost:8888/api/upload.php", {
+                axios.get(site+"upload.php", {
                     params: {name: UserShare}
                 }).then(response =>{
 
-                SetSharedUsers(prev => [
-                    ...prev,
-                    {
-                        Name: UserShare,
-                        Data :JSON.parse(response.data[0].data),
-                    }
-                ])})
+                    SetSharedUsers(prev => [
+                        ...prev,
+                        {
+                            Name: UserShare,
+                            Data :JSON.parse(response.data[0].data),
+                        }
+                    ])})
                 SetSuccess(true)
 
             }else {
@@ -115,7 +116,7 @@ const Account = () => {
         );
     }
     useEffect(() => {
-        axios.post("http://localhost:8888/api/AcShare.php", {
+        axios.post(site+"AcShare.php", {
             process: "AddShare",
             name: help.name,
             Share: SharedUsers,
@@ -133,45 +134,45 @@ const Account = () => {
                         onClick={() => DealetDiv(i)}
                     /></span>
             </span>
-            );
+        );
 
     });
-  return (
-    <>
-        {AleradyShare &&(
-            <div className={"Error"} id={'close2'}>Email  je již zdílen</div>
-        )}
-        {NotExisistingUsername &&(
-            <div className={"Error"} id={'close1'}>Email  jméno neexistuje</div>
-        )}
-        {Success &&(
-            <div className={"Good"} id={'close3'}>Uspěšně přidáno</div>
-        )}
-        {AShare &&(
+    return (
         <>
-            <div className={"AddDiv_box"} id={'close'}>
+            {AleradyShare &&(
+                <div className={"Error"} id={'close2'}>Email  je již zdílen</div>
+            )}
+            {NotExisistingUsername &&(
+                <div className={"Error"} id={'close1'}>Email  jméno neexistuje</div>
+            )}
+            {Success &&(
+                <div className={"Good"} id={'close3'}>Uspěšně přidáno</div>
+            )}
+            {AShare &&(
+                <>
+                    <div className={"AddDiv_box"} id={'close'}>
                 <span className={'tools'}>
                     <input id={'UserShare'}/>
                     <button onClick={SharedAccaunt}> Přidat</button>
                 </span>
-                <div>
-                    Uživatelé od ktrých získáváte poznámky
-                    <span className={'usersspan'}>
+                        <div>
+                            Uživatelé od ktrých získáváte poznámky
+                            <span className={'usersspan'}>
                         {share}
                     </span>
-                </div>
-            </div>
+                        </div>
+                    </div>
 
+                </>
+            )
+            }
+            <button onClick={logout} id={"logout"}>
+                Logout
+            </button>
+            <button onClick={Share} id={"share"}>
+                Share Notes
+            </button>
         </>
-        )
-        }
-      <button onClick={logout} id={"logout"}>
-        Logout
-      </button>
-      <button onClick={Share} id={"share"}>
-        Share Notes
-      </button>
-    </>
-  );
+    );
 };
 export default Account;

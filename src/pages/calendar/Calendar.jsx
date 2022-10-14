@@ -7,12 +7,14 @@ import {IoIosArrowDown, IoIosArrowUp} from "react-icons/all";
 
 
 const Calendar = () => {
+  const site="http://localhost:8888/api/"
   const date = new Date();
   let newDate = new Date();
   const obj = [];
   const MonthName = [
     "January",
     "February",
+    "March",
     "March",
     "April",
     "May",
@@ -98,22 +100,22 @@ const Calendar = () => {
 
   }
   const ShowCallendarRow=(dday,index)=>{
+    let u=[]
     if (ExternalEvents.filter(e => e.Day === index).length > 0) {
-      let u=[]
-      for (let x=0;x<Share.length;x++) {
-        Object.keys(Share[x].Data).map((item, i) => {
-          if (Share[x].Data[i].Day===index) {
-            u = u + '<div class='+((Share[x].Name).replaceAll('.', '-')).replaceAll('@', '-')+'>' + Share[x].Data[i].TaskName + '</div>'
-          }
-        })}
       Object.keys(ExternalEvents).map((item, i) => {
         if (ExternalEvents[i].Day===index) {
           u = u + '<div class=TodoInCalendar>' + ExternalEvents[i].TaskName + '</div>'
-        }
-      });
-      console.log(u)
-      return('<div class="product" id="' + index + '"> ' + dday +'<div class="scroll">'+u+'</div>'+ " </div>");
+        }})}
 
+    for (let x=0;x<Share.length;x++) {
+      Object.keys(Share[x].Data).map((item, i) => {
+        if (Share[x].Data[i].Day===index) {
+          u = u + '<div class='+((Share[x].Name).replaceAll('.', '-')).replaceAll('@', '-')+'>' + Share[x].Data[i].TaskName + '</div>'
+        }
+      })}
+    console.log(u)
+    if (u.length>0){
+      return('<div class="product" id="' + index + '"> ' + dday +'<div class="scroll">'+u+'</div>'+ " </div>")
     }else {
       return('<div class="product" id="' + index + '"> ' + dday + " </div>");
     }
@@ -227,7 +229,7 @@ const Calendar = () => {
 
     useEffect(() => {
       axios
-          .get("http://localhost:8888/api/upload.php", {
+          .get(site+"upload.php", {
             params: { name: username }
           })
           .then(response => {
@@ -242,7 +244,7 @@ const Calendar = () => {
 
     }, [])
     useEffect(() => {
-      axios.get("http://localhost:8888/api/AcShare.php", {
+      axios.get(site+"AcShare.php", {
         params: {name: help.name}
       }).then(response => {
         try {
@@ -359,10 +361,10 @@ const Calendar = () => {
                                   id={((Share[i].Name+'h').replaceAll('.', '-')).replaceAll('@', '-')}
               />
               <AiFillEye onClick={(() => Reveal(Share[i].Name))}
-                                  className={'show1'}
-                                  id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
-                                  size={20}
-                                  style={{display : 'none'}}
+                         className={'show1'}
+                         id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
+                         size={20}
+                         style={{display : 'none'}}
               />
           <br/>
         </span>
@@ -376,10 +378,10 @@ const Calendar = () => {
                                 id={((Share[i].Name+'h').replaceAll('.', '-')).replaceAll('@', '-')}
                                 size={20}/>
             <AiFillEye onClick={(() => Reveal(Share[i].Name))}
-                                className={'show1'}
-                                id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
-                                size={20}
-                                style={{display : 'none'}}
+                       className={'show1'}
+                       id={((Share[i].Name+'r').replaceAll('.', '-')).replaceAll('@', '-')}
+                       size={20}
+                       style={{display : 'none'}}
             />
           <br/>
         </span>)
@@ -396,59 +398,59 @@ const Calendar = () => {
     }
   })
   return (
-    <>
-      <div>
-        <div className={"TopBar"}>
-          <div>
-            <button id={"today"} onClick={today}>
-              Today
-            </button>
-            <AiOutlineArrowLeft className={"changedatearow"} onClick={front} />
-            <AiOutlineArrowRight className={"changedatearow"} onClick={back} />
-            <span id={"date"}>
+      <>
+        <div>
+          <div className={"TopBar"}>
+            <div>
+              <button id={"today"} onClick={today}>
+                Today
+              </button>
+              <AiOutlineArrowLeft className={"changedatearow"} onClick={front} />
+              <AiOutlineArrowRight className={"changedatearow"} onClick={back} />
+              <span id={"date"}>
               {sessionStorage.getItem("month")}
-              {sessionStorage.getItem("year")}
+                {sessionStorage.getItem("year")}
             </span>
-            <span id={'Share'}>
+              <span id={'Share'}>
                 Sdíleno
-              {Down &&(
-                  <>
-                    <IoIosArrowDown onClick={()=>{
-                      SetUp(true)
-                      SetDown(false)
+                {Down &&(
+                    <>
+                      <IoIosArrowDown onClick={()=>{
+                        SetUp(true)
+                        SetDown(false)
 
+                      }}
+                                      id={'down'}
+                                      className={'ShareArrow'}
+                      />
+                      <div id={"1"} className={'Share'} >{Share_AC}</div>
+                    </>
+                )}
+                {Up &&(
+                    <IoIosArrowUp onClick={()=>{
+                      SetUp(false)
+                      SetDown(true)
                     }}
-                    id={'down'}
-                    className={'ShareArrow'}
-                    />
-                    <div id={"1"} className={'Share'} >{Share_AC}</div>
-                  </>
-                    )}
-              {Up &&(
-                <IoIosArrowUp onClick={()=>{
-                  SetUp(false)
-                  SetDown(true)
-                }}
-                className={'ShareArrow'}
-                />)}
+                                  className={'ShareArrow'}
+                    />)}
             </span>
+            </div>
           </div>
-        </div>
 
-        <div id={"calendar_div"}>
-          <div className={"DivWithDay"}>
-            <div className={"NameOfDays"}>Mon</div>
-            <div className={"NameOfDays"}>Tue</div>
-            <div className={"NameOfDays"}>Wed</div>
-            <div className={"NameOfDays"}>Thu</div>
-            <div className={"NameOfDays"}>Fri</div>
-            <div className={"NameOfDays"}>Sat</div>
-            <div className={"NameOfDays"}>Sun</div>
+          <div id={"calendar_div"}>
+            <div className={"DivWithDay"}>
+              <div className={"NameOfDays"}>Mon</div>
+              <div className={"NameOfDays"}>Tue</div>
+              <div className={"NameOfDays"}>Wed</div>
+              <div className={"NameOfDays"}>Thu</div>
+              <div className={"NameOfDays"}>Fri</div>
+              <div className={"NameOfDays"}>Sat</div>
+              <div className={"NameOfDays"}>Sun</div>
+            </div>
+            <div id={"object"}>{onloadCallendar(obj)}</div>
           </div>
-          <div id={"object"}>{onloadCallendar(obj)}</div>
         </div>
-      </div>
-    </>
+      </>
   );
 };
 export default Calendar;

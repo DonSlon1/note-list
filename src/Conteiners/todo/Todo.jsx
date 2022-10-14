@@ -12,7 +12,7 @@ import axios from "axios";
 import {BiDotsVerticalRounded, IoIosArrowDown, IoIosArrowUp} from "react-icons/all";
 
 const Todo = () => {
-
+  const site="http://localhost:8888/api/"
   const Share_AC=[]
   const [Up,SetUp]=useState(true)
   const [Down,SetDown]=useState(false)
@@ -39,21 +39,26 @@ const Todo = () => {
       const navigate = useNavigate();
       useEffect(() => {
         axios
-            .get("http://localhost:8888/api/upload.php", {
+            .get(site+"upload.php", {
               params: { name: username }
             })
             .then(response => {
-              if (response.data[0]===undefined){
-                localStorage.clear();
-                sessionStorage.clear();
-                navigate("/login");
-              }else {
-                setExternalEvents(JSON.parse(response.data[0].data))
+              try {
+                if (response.data[0] === undefined) {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                  navigate("/login");
+                } else {
+                  setExternalEvents(JSON.parse(response.data[0].data))
+                }
+              }
+              catch (e) {
+                console.log(e)
               }
             });
       }, []);
       useEffect(() => {
-        axios.get("http://localhost:8888/api/AcShare.php", {
+        axios.get(site+"AcShare.php", {
           params: {name: help.name}
         }).then(response => {
           try {
@@ -160,7 +165,7 @@ const Todo = () => {
         setExternalEvents(list);
       };
       useEffect(() => {
-        axios.post("http://localhost:8888/api/upload.php", {
+        axios.post(site+"upload.php", {
           data: externalEvents,
           process: "POST",
           name: username
@@ -304,9 +309,9 @@ const Todo = () => {
                           SetUp(true)
                           SetDown(false)
                         }}
-                        size={20}
-                        id={'down'}
-                        className={'ShareArrow1'}
+                                               size={20}
+                                               id={'down'}
+                                               className={'ShareArrow1'}
                         />
                         <div id={"1"} className={'Share'} >Sdílení uživatelé :<br/>{Share_AC}</div>
                       </>
@@ -316,8 +321,8 @@ const Todo = () => {
                         SetUp(false)
                         SetDown(true)
                       }}
-                     size={20}
-                     className={'ShareArrow1'}
+                                             size={20}
+                                             className={'ShareArrow1'}
                       />)}
               </span>
             </div>
