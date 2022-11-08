@@ -206,8 +206,8 @@ const Registration = () => {
             <input type={"checkbox"} onClick={long_login} id={"long_login"}/>
             Remember me</label>
           </span>
-            <div className={"LoginButton"} onClick={login1}>
-              <button className={"LoginButtonb"}>Create account</button>
+            <div className={"LoginButton"} >
+              <button className={"LoginButtonb"} onClick={login1}>Create account</button>
             </div>
             <span className={"dont"}>
             <Link className={"accaunt"} to={"/login"}>

@@ -44,8 +44,9 @@ if($method==="POST"){
             while($row = $resoult->fetch_assoc()) {
                 $myArray[] = $row;
             }
+
             $PasswordDatabase=$myArray[0]['password'];
-            if ($password==$PasswordDatabase){
+            if (password_verify($password, $PasswordDatabase)){
                 echo 'loginsucesfule';
             }
             else{

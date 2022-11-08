@@ -8,13 +8,12 @@ import {IoIosArrowDown, IoIosArrowUp} from "react-icons/all";
 
 const Calendar = () => {
   const site="http://localhost:8888/api/"
-  const date = new Date();
+  let date = new Date();
   let newDate = new Date();
   const obj = [];
   const MonthName = [
     "January",
     "February",
-    "March",
     "March",
     "April",
     "May",
@@ -40,6 +39,7 @@ const Calendar = () => {
     "Nov",
     "Dec"
   ];
+
   const days = [
     "Thursday",
     "Friday",
@@ -85,12 +85,21 @@ const Calendar = () => {
         return(ShortMonthName[sessionStorage.getItem("MonthINT") - 2] + " " + dday + ", " + sessionStorage.getItem("year"))}
     }else if (dday > sessionStorage.getItem("DaysInMonth")) {
       dday = dday - sessionStorage.getItem("DaysInMonth");
-      if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] === undefined) {
+      console.log(parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1))
+      if (parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1) === 12) {
+
+        return(ShortMonthName[11] + " " + dday + ", " + sessionStorage.getItem("year"));
+      }
+
+      else if (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] === undefined) {
+
         return( ShortMonthName[0] + " " + dday + ", " + (parseInt(sessionStorage.getItem("year")) + parseInt(1)));
-      } else {
-        return (MonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year"));
+      }
+      else {
+        return (ShortMonthName[parseInt(sessionStorage.getItem("MonthINT")) + parseInt(1)] + " " + dday + ", " + sessionStorage.getItem("year"));
       }
     }else {
+
       return (sessionStorage.getItem("ShortMont") +
           " " +
           dday +
@@ -113,7 +122,7 @@ const Calendar = () => {
           u = u + '<div class='+((Share[x].Name).replaceAll('.', '-')).replaceAll('@', '-')+'>' + Share[x].Data[i].TaskName + '</div>'
         }
       })}
-    console.log(u)
+
     if (u.length>0){
       return('<div class="product" id="' + index + '"> ' + dday +'<div class="scroll">'+u+'</div>'+ " </div>")
     }else {
@@ -185,6 +194,7 @@ const Calendar = () => {
         for (let z = 1; z <= 7; z++) {
           dday = +z - parseInt(sessionStorage.getItem("day"));
           let index=index1(dday,z)
+
           if (dday <= 0) {
             dday = parseInt(new Date(year, MonthINT - 1, 0).getDate() - 1) - parseInt(sessionStorage.getItem("day")) + z}
 
@@ -198,7 +208,7 @@ const Calendar = () => {
           if (dday > sessionStorage.getItem("DaysInMonth")) {
             dday = dday - sessionStorage.getItem("DaysInMonth")}
 
-          console.log(index)
+
           row=row+ShowCallendarRow(dday,index)
         }
       } else {
@@ -216,10 +226,9 @@ const Calendar = () => {
   let help = undefined;
   if (localStorage.user !== undefined) {
     help = JSON.parse(localStorage.user);
-    console.log(help);
+
   } else if (sessionStorage.user !== undefined) {
     help = JSON.parse(sessionStorage.user);
-    console.log(help);
   }
 
 
@@ -326,7 +335,7 @@ const Calendar = () => {
     setdate(newDate);
   };
   const today = () => {
-    const date = new Date();
+    date = new Date();
     setdate(date);
   };
   const x = ShowCallendar(obj);

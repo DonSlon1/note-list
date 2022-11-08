@@ -32,8 +32,8 @@ if($method==="POST"){
 
     if ($password!=""){
 
-
-        $sql1 = "INSERT INTO users_node(username, password, data,ShareData,ShareAccaunt ) VALUES ('$name','$password','[]','[]','[]')";
+        $password_hash=password_hash($password, PASSWORD_DEFAULT);
+        $sql1 = "INSERT INTO users_node(username, password, data,ShareData,ShareAccaunt ) VALUES ('$name','$password_hash','[]','[]','[]')";
         $sql = "SELECT * FROM users_node WHERE 'username'";
         $sql_u = "SELECT * FROM users_node WHERE username='$name'";
         $res_u = mysqli_query($conn, $sql_u);
